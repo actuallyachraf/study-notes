@@ -2,7 +2,7 @@
 
 This repo contain markdown notes for the following textbooks
 
-- [Introduction to Theoretical CS](https://intotcs.org)
+- [Introduction to Theoretical CS](https://introtcs.org)
 - [Joy Of Cryptography](http://web.engr.oregonstate.edu/~rosulekm/crypto/)
 - [An intensive introduction to Cryptography](https://intensecrypto.org/public/index.html)
 - [Abstract Algebra and It's applications-Judson and Beezer](https://abstract.ups.edu)
