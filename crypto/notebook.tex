@@ -1,0 +1,637 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Discrete Logarithm Problem}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{hello world}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+hello world
+
+    \end{Verbatim}
+
+    \subsection{Discrete Logarithm
+Problem}\label{discrete-logarithm-problem}
+
+The discrete logarithm problem can be summarized as finding \(x\) such
+as \(g^x = y\) given \(g\) . In our case \(g\) is a generator of a
+subgroup of order \(q\) a prime divisor of \((p-1)\).
+
+The tuple \((p,q,g)\) is public, \(x\) ,\emph{the private key}, is an
+integer sampled at random from \(<g>\) the subgroup generated by \(g\).
+The public key is simply \(y\).
+
+    \subsection{Discrete Logarithm Parameter
+Generation}\label{discrete-logarithm-parameter-generation}
+
+Our goal is to generate public parameters for our system based on the
+DLP. The ingredients required are a large prime \(p\) (1024-bit...) a
+prime divisor of \(p-1\) and a generator. Finding the generator is the
+only \emph{costly} operation using \textbf{Fermat Last Theorem} we will
+be able to compute it easily.
+
+\begin{itemize}
+\tightlist
+\item
+  Input : Security parameter l,t
+\item
+  Output : DL Domain parameters (p,q,g)
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Select a t-bit prime \(q\) and an l-bit prime \(p\) such as
+  \(q | p-1\).
+\item
+  Finding an element g of order q (finding the generator):
+
+  2.1. Select an arbitrary \(h \in [1,p-1]\) and compute
+  \(g = h^{((p-1)/q)} \mod p\)
+
+  2.2. If g = 1 then go to step 2.1 \((Pr(g=1) = 1/p)\)
+\item
+  Return (p,q,g)
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{def} \PY{n+nf}{dlp\PYZus{}param\PYZus{}gen}\PY{p}{(}\PY{n}{l}\PY{p}{,}\PY{n}{t}\PY{p}{)}\PY{p}{:}
+            \PY{n}{p} \PY{o}{=} \PY{n}{random\PYZus{}prime}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{\PYZca{}}\PY{n}{l}\PY{p}{,}\PY{n}{lbound}\PY{o}{=}\PY{l+m+mi}{2}\PY{o}{\PYZca{}}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+            \PY{n}{q} \PY{o}{=} \PY{n}{prime\PYZus{}divisors}\PY{p}{(}\PY{n}{p}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{c+c1}{\PYZsh{} get the largest prime divisor of p\PYZhy{}1}
+            \PY{n}{h} \PY{o}{=} \PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{p}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+            \PY{n}{y} \PY{o}{=} \PY{n}{Integer}\PY{p}{(}\PY{p}{(}\PY{n}{p}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{/}\PY{n}{q}\PY{p}{)}
+            \PY{n}{g} \PY{o}{=} \PY{n}{power\PYZus{}mod}\PY{p}{(}\PY{n}{h}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{p}\PY{p}{)}
+            \PY{k}{if} \PY{n}{g} \PY{o}{==} \PY{l+m+mi}{1} \PY{p}{:}
+                \PY{n}{g} \PY{o}{=} \PY{n}{power\PYZus{}mod}\PY{p}{(}\PY{n}{h}\PY{p}{,}\PY{n}{Integer}\PY{p}{(}\PY{p}{(}\PY{n}{p}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{/}\PY{o}{/}\PY{n}{q}\PY{p}{)}\PY{p}{,}\PY{n}{p}\PY{p}{)}
+            \PY{k}{return} \PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g} \PY{o}{=} \PY{n}{dlp\PYZus{}param\PYZus{}gen}\PY{p}{(}\PY{l+m+mi}{256}\PY{p}{,}\PY{l+m+mi}{128}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{is\PYZus{}prime}\PY{p}{(}\PY{n}{q}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}16}]:} True
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{is\PYZus{}prime}\PY{p}{(}\PY{n}{p}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}17}]:} True
+\end{Verbatim}
+            
+    \subsection{Keypair generation}\label{keypair-generation}
+
+Since we're doing public key crypto we need to generate a keypair
+composed of our secret private key and a public key. The algorithm to do
+so is as follows :
+
+\begin{itemize}
+\tightlist
+\item
+  Input : Domain parameters \((p,q,g)\)
+\item
+  Output : public key \(y\) and private key \(x\)
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Sample \(x \in [1,q-1]\)
+\item
+  Compute \(y = g^x \mod p\)
+\item
+  Return \((y,x)\)
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{k}{def} \PY{n+nf}{dlp\PYZus{}keygen}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{)}\PY{p}{:}
+             \PY{n}{x} \PY{o}{=} \PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{q}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+             \PY{n}{y} \PY{o}{=} \PY{n}{power\PYZus{}mod}\PY{p}{(}\PY{n}{g}\PY{p}{,}\PY{n}{x}\PY{p}{,}\PY{n}{p}\PY{p}{)}
+             \PY{k}{return} \PY{p}{(}\PY{n}{y}\PY{p}{,}\PY{n}{x}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{p}{(}\PY{n}{y}\PY{p}{,}\PY{n}{x}\PY{p}{)} \PY{o}{=} \PY{n}{dlp\PYZus{}keygen}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{Encryption and Decryption}\label{encryption-and-decryption}
+
+You can refer to
+\href{https://stackoverflow.com/questions/45617188/converting-elgamal-encryption-from-encrypting-numbers-to-strings}{this
+answer} from stack overflow for more details.
+
+Since you're encrypting using numbers doing so for a \emph{plaintext}
+such as a credit card number or a \textbf{short message} is trivial you
+simple take your \emph{text or binary data} turn it into a bytes then
+encode the bytes into a \emph{big integer}.
+
+Doing so for bytes is obvious since a string is just an array of bytes,
+encoding into big integers depends on your language (whether it supports
+arbitrary precision integers or needs a library).
+
+When I say \textbf{short message} I point to the fact that your message
+needs to be smaller than the \(p\) parameter since it needs to be inside
+the \emph{group we're working on} in this case \(\mathbb{Z_p}\) .
+
+\subsection{Signature and DSA}\label{signature-and-dsa}
+
+The principle behind signing is authenticating the source of the data.
+In our case Alice signs a message to prove to Bob the message's content
+and authenticity.
+
+A great example is \href{https://ethereum.org}{ethereum}, to send some
+\emph{ether} to Bob,Alice constructs a transaction saying \emph{send
+10ether to Bob from this account} here's a signature \(s\) proving
+\emph{I did authorize the transaction}.
+
+Ethereum of course uses a better construction based on Elliptic Curves
+(the subject of the next set of notes).
+
+Here we'll see \textbf{DSA}, the Digital Signature Algorithm was
+proposed by NIST in 1991. You have to know the difference between the
+signature algorithm and the math itself, the algorithm only does some
+computation to build hard to solve and easy to verify problems.
+
+There can be many algorithms in fact we'll see another one designed by
+\textbf{Schnorr} that was pattented until 2008. The algorithm can remain
+the same (require slight modifications) and we can instead change the
+\emph{math}, that's in a sense how this thing works the math provides us
+with security guarrentees that \emph{this equation is difficult to solve
+here are some big numbers to use for doing equation stuff}.
+
+The DSA algorithm works as follows :
+
+\begin{itemize}
+\item
+  Input : Domain parameters : \((p,q,g)\),private key \(x\),message
+  \(m\)
+\item
+  Output : a signature \((r,s)\)
+
+  1.Sample a random \(k \in [1,q-1]\).
+
+  2.Compute \(T = g^k \mod p\).
+
+  3.Compute \(r = T \mod q\) if \(r=0\) recompute go to 1.
+
+  4.Compute \(h = H(m)\) , \(H\) is a hash function.
+
+  5.Compute \(s = k^{-1} ( h + xr) \mod q\) if \(s=0\) go to 1.
+
+  6.Return (r,s)
+\end{itemize}
+
+The DSA signature verification algorithm works as follows :
+
+\begin{itemize}
+\item
+  Input : Domain parameters : \((p,q,g)\),public key \(y\),message \(m\)
+  ,signature \((r,s)\)
+\item
+  Output : Boolean
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Verify that r,s are in the interval \([1,q-1]\) reject if not
+  \item
+    Compute \(h = H(m)\)
+  \item
+    Compute \(w = s^{-1} \mod q\)
+  \item
+    Compute \(u_1 = hw \mod q\)
+  \item
+    Compute \(u_2 = rw \mod q\)
+  \item
+    Compute \(T = g^{u_1}y^{u_2} \mod p\)
+  \item
+    Compute \(r' = T \mod q\)
+  \item
+    If \(r = r'\) then the signature is valid otherwise reject it.
+  \end{enumerate}
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{k+kn}{from} \PY{n+nn}{hashlib} \PY{k+kn}{import} \PY{n}{sha256}
+         
+         \PY{k}{def} \PY{n+nf}{h}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{hash} \PY{o}{=} \PY{n}{sha256}\PY{p}{(}\PY{p}{)}
+             \PY{n+nb}{hash}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+             \PY{k}{return} \PY{n+nb}{hash}\PY{o}{.}\PY{n}{digest}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{b} \PY{o}{=} \PY{l+s+sa}{b}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Nobody inspects}\PY{l+s+s2}{\PYZdq{}}
+         \PY{n}{h}\PY{p}{(}\PY{n}{b}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}23}]:} '\textbackslash{}xe7\textbackslash{}xa3\textbackslash{}xf8\textbackslash{}x08\textbackslash{}xcb\textbackslash{}x06\textbackslash{}x87\textbackslash{}xfd6`\textbackslash{}xe9V\textbackslash{}xa5\textbackslash{}xdf\textbackslash{}x0f\textbackslash{}x00\textbackslash{}xe2>\textbackslash{}xda\textbackslash{}xc5e\textbackslash{}x07i\textbackslash{}xec5N\textbackslash{}xe6p\textbackslash{}xb6X\textbackslash{}x85\textbackslash{}x8c'
+\end{Verbatim}
+            
+    Because sagemath doesn't support bytes to integer conversion I did that
+in python and pasted the number here.
+h(b)=63559401733551349337704679248512602984947374998675114433015782914039590986727
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{c+c1}{\PYZsh{} Let\PYZsq{}s check that h is less than our p i.e is inside Zp}
+         \PY{n}{h} \PY{o}{=} \PY{l+m+mi}{63559401733551349337704679248512602984947374998675114433015782914039590986727}
+         \PY{n}{h} \PY{o}{\PYZlt{}} \PY{p}{(}\PY{n}{p}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}24}]:} True
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{k}{def} \PY{n+nf}{dlp\PYZus{}dsa\PYZus{}sign}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{m}\PY{p}{)}\PY{p}{:}
+             \PY{n}{k} \PY{o}{=} \PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{q}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+             \PY{n}{T} \PY{o}{=} \PY{n}{power\PYZus{}mod}\PY{p}{(}\PY{n}{g}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{p}\PY{p}{)}
+             \PY{n}{r} \PY{o}{=} \PY{n}{mod}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{q}\PY{p}{)}
+             \PY{k}{if} \PY{n}{r} \PY{o}{==} \PY{l+m+mi}{0} \PY{p}{:}
+                 \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r=0 repeat}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{n}{h} \PY{o}{=} \PY{l+m+mi}{63559401733551349337704679248512602984947374998675114433015782914039590986727}
+             \PY{n}{invk} \PY{o}{=} \PY{n}{inverse\PYZus{}mod}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n}{q}\PY{p}{)}
+             \PY{n}{s1} \PY{o}{=} \PY{n}{invk}\PY{o}{*}\PY{p}{(}\PY{n}{Integer}\PY{p}{(}\PY{n}{h}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{y}\PY{o}{*}\PY{n}{r}\PY{p}{)}\PY{p}{)}
+             \PY{n}{s} \PY{o}{=} \PY{n}{s1} \PY{o}{\PYZpc{}} \PY{n}{q}
+             \PY{k}{if} \PY{n}{s} \PY{o}{==} \PY{l+m+mi}{0} \PY{p}{:}
+                 \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{s=0 repeat}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{k}{return} \PY{p}{(}\PY{n}{r}\PY{p}{,}\PY{n}{s}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{n}{r}\PY{p}{,}\PY{n}{s} \PY{o}{=} \PY{n}{dlp\PYZus{}dsa\PYZus{}sign}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{,}\PY{n}{x}\PY{p}{,}\PY{n}{b}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{k}{print}\PY{p}{(}\PY{n}{r} \PY{o}{\PYZlt{}} \PY{p}{(}\PY{n}{q}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+         \PY{k}{print}\PY{p}{(}\PY{n}{s} \PY{o}{\PYZlt{}} \PY{p}{(}\PY{n}{q}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+         \PY{k}{print}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{r}\PY{p}{,}\PY{n}{s}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+True
+True
+(104116694597093556388258477325882371225424429632523019990173022300713386500073, 362139158459728960513971474916731095377, 1953481512989517349830463270950424582837833895114092601119358879143227469542, 80122107292756902200579454089856062921509161717082990519030243630852977095017, 339846853237835977816144818670279379797, 280672864958921241162029585029789708142)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{k}{def} \PY{n+nf}{dlp\PYZus{}dsa\PYZus{}verify}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{r}\PY{p}{,}\PY{n}{s}\PY{p}{,}\PY{n}{h}\PY{p}{)}\PY{p}{:}
+             \PY{c+c1}{\PYZsh{} if r or s isn\PYZsq{}t in [1,q\PYZhy{}1] reject the signature}
+             \PY{n}{w} \PY{o}{=} \PY{n}{inverse\PYZus{}mod}\PY{p}{(}\PY{n}{Integer}\PY{p}{(}\PY{n}{s}\PY{p}{)}\PY{p}{,}\PY{n}{q}\PY{p}{)}
+             \PY{n}{u1} \PY{o}{=} \PY{n}{mod}\PY{p}{(}\PY{n}{h}\PY{o}{*}\PY{n}{w}\PY{p}{,}\PY{n}{q}\PY{p}{)}
+             \PY{n}{u2} \PY{o}{=} \PY{n}{mod}\PY{p}{(}\PY{n}{r}\PY{o}{*}\PY{n}{w}\PY{p}{,}\PY{n}{q}\PY{p}{)}
+             \PY{n}{T1} \PY{o}{=} \PY{n}{power\PYZus{}mod}\PY{p}{(}\PY{n}{g}\PY{p}{,}\PY{n}{Integer}\PY{p}{(}\PY{n}{u1}\PY{p}{)}\PY{p}{,}\PY{n}{p}\PY{p}{)}
+             \PY{n}{T2} \PY{o}{=} \PY{n}{power\PYZus{}mod}\PY{p}{(}\PY{n}{y}\PY{p}{,}\PY{n}{Integer}\PY{p}{(}\PY{n}{u2}\PY{p}{)}\PY{p}{,}\PY{n}{p}\PY{p}{)}
+             \PY{n}{T} \PY{o}{=} \PY{n}{mod}\PY{p}{(}\PY{p}{(}\PY{n}{T1}\PY{o}{*}\PY{n}{T2}\PY{p}{)}\PY{p}{,}\PY{n}{p}\PY{p}{)} 
+             \PY{n}{rp} \PY{o}{=} \PY{n}{mod}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{q}\PY{p}{)}
+             \PY{k}{if} \PY{n}{r} \PY{o}{==} \PY{n}{rp}\PY{p}{:}
+                 \PY{k}{return} \PY{n+nb+bp}{True}
+             \PY{k}{else} \PY{p}{:}
+                 \PY{k}{return} \PY{n+nb+bp}{False}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{n}{dlp\PYZus{}dsa\PYZus{}verify}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{r}\PY{p}{,}\PY{n}{s}\PY{p}{,}\PY{n}{h}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}30}]:} True
+\end{Verbatim}
+            
+    To wrap up this let's write a proof that the signature validation
+algorithm is correct
+
+\(Proof\) :
+
+\begin{itemize}
+\item
+  Let \(k\) a random element we have \(T = g^k \mod p\)
+\item
+  let \(r = T \mod q\) and \(s = k^{-1} (h+xr) \mod q\)
+\item
+  Verifier doesn't know x nor k but using algebra we can see that
+  \(k = s^{-1} (h+xr) \mod q\)
+\item
+  We raise both sides to \(g\) \$ g\^{}k = g\textsuperscript{\{hs}\{-1\}
+  + xr\{s\^{}\{-1\}\}\} \mod q\$
+\item
+  We decompose the right hand side
+  \(g^k = g^{hs^{-1}} . g^{xrs^{-1}} \mod q\)
+\item
+  \(g^x = y\) thus \(g^k = g^{hs^{-1}} . y^{rs^{-1}} \mod q\)
+\item
+  The verifier now computes \(T = (g^{hs^{-1}} . y^{rs^{-1}} \mod q)\)
+  and verifies \(r' = T \mod q\) is equal to \(r\) \(\square\)
+\end{itemize}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
