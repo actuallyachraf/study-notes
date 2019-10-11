@@ -141,7 +141,7 @@
     \def\gt{>}
     \def\lt{<}
     % Document parameters
-    \title{Discrete Logarithm Problem}
+    \title{Discrete Logarithm Problem - DSA \& Schnorr Signatures over Zp}
     
     
     
@@ -281,7 +281,7 @@
 
     
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{hello world}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{hello world}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
 \end{Verbatim}
 
 
@@ -289,6 +289,11 @@
 hello world
 
     \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{load}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{utils.py}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
 
     \subsection{Discrete Logarithm
 Problem}\label{discrete-logarithm-problem}
@@ -335,39 +340,39 @@ be able to compute it easily.
 \end{enumerate}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}6}]:} \PY{k}{def} \PY{n+nf}{dlp\PYZus{}param\PYZus{}gen}\PY{p}{(}\PY{n}{l}\PY{p}{,}\PY{n}{t}\PY{p}{)}\PY{p}{:}
-            \PY{n}{p} \PY{o}{=} \PY{n}{random\PYZus{}prime}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{\PYZca{}}\PY{n}{l}\PY{p}{,}\PY{n}{lbound}\PY{o}{=}\PY{l+m+mi}{2}\PY{o}{\PYZca{}}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
-            \PY{n}{q} \PY{o}{=} \PY{n}{prime\PYZus{}divisors}\PY{p}{(}\PY{n}{p}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{c+c1}{\PYZsh{} get the largest prime divisor of p\PYZhy{}1}
-            \PY{n}{h} \PY{o}{=} \PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{p}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
-            \PY{n}{y} \PY{o}{=} \PY{n}{Integer}\PY{p}{(}\PY{p}{(}\PY{n}{p}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{/}\PY{n}{q}\PY{p}{)}
-            \PY{n}{g} \PY{o}{=} \PY{n}{power\PYZus{}mod}\PY{p}{(}\PY{n}{h}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{p}\PY{p}{)}
-            \PY{k}{if} \PY{n}{g} \PY{o}{==} \PY{l+m+mi}{1} \PY{p}{:}
-                \PY{n}{g} \PY{o}{=} \PY{n}{power\PYZus{}mod}\PY{p}{(}\PY{n}{h}\PY{p}{,}\PY{n}{Integer}\PY{p}{(}\PY{p}{(}\PY{n}{p}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{/}\PY{o}{/}\PY{n}{q}\PY{p}{)}\PY{p}{,}\PY{n}{p}\PY{p}{)}
-            \PY{k}{return} \PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}13}]:} \PY{k}{def} \PY{n+nf}{dlp\PYZus{}param\PYZus{}gen}\PY{p}{(}\PY{n}{l}\PY{p}{,}\PY{n}{t}\PY{p}{)}\PY{p}{:}
+             \PY{n}{p} \PY{o}{=} \PY{n}{random\PYZus{}prime}\PY{p}{(}\PY{l+m+mi}{2}\PY{o}{\PYZca{}}\PY{n}{l}\PY{p}{,}\PY{n}{lbound}\PY{o}{=}\PY{l+m+mi}{2}\PY{o}{\PYZca{}}\PY{p}{(}\PY{n}{l}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+             \PY{n}{q} \PY{o}{=} \PY{n}{prime\PYZus{}divisors}\PY{p}{(}\PY{n}{p}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{c+c1}{\PYZsh{} get the largest prime divisor of p\PYZhy{}1}
+             \PY{n}{h} \PY{o}{=} \PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{p}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+             \PY{n}{y} \PY{o}{=} \PY{n}{Integer}\PY{p}{(}\PY{p}{(}\PY{n}{p}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{/}\PY{n}{q}\PY{p}{)}
+             \PY{n}{g} \PY{o}{=} \PY{n}{power\PYZus{}mod}\PY{p}{(}\PY{n}{h}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{p}\PY{p}{)}
+             \PY{k}{if} \PY{n}{g} \PY{o}{==} \PY{l+m+mi}{1} \PY{p}{:}
+                 \PY{n}{g} \PY{o}{=} \PY{n}{power\PYZus{}mod}\PY{p}{(}\PY{n}{h}\PY{p}{,}\PY{n}{Integer}\PY{p}{(}\PY{p}{(}\PY{n}{p}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{/}\PY{o}{/}\PY{n}{q}\PY{p}{)}\PY{p}{,}\PY{n}{p}\PY{p}{)}
+             \PY{k}{return} \PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g} \PY{o}{=} \PY{n}{dlp\PYZus{}param\PYZus{}gen}\PY{p}{(}\PY{l+m+mi}{256}\PY{p}{,}\PY{l+m+mi}{128}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g} \PY{o}{=} \PY{n}{dlp\PYZus{}param\PYZus{}gen}\PY{p}{(}\PY{l+m+mi}{256}\PY{p}{,}\PY{l+m+mi}{128}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{is\PYZus{}prime}\PY{p}{(}\PY{n}{q}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{is\PYZus{}prime}\PY{p}{(}\PY{n}{q}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}15}]:} True
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{is\PYZus{}prime}\PY{p}{(}\PY{n}{p}\PY{p}{)}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
 {\color{outcolor}Out[{\color{outcolor}16}]:} True
-\end{Verbatim}
-            
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{is\PYZus{}prime}\PY{p}{(}\PY{n}{p}\PY{p}{)}
-\end{Verbatim}
-
-
-\begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}17}]:} True
 \end{Verbatim}
             
     \subsection{Keypair generation}\label{keypair-generation}
@@ -396,7 +401,7 @@ so is as follows :
 \end{enumerate}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}20}]:} \PY{k}{def} \PY{n+nf}{dlp\PYZus{}keygen}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{)}\PY{p}{:}
+{\color{incolor}In [{\color{incolor}17}]:} \PY{k}{def} \PY{n+nf}{dlp\PYZus{}keygen}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{)}\PY{p}{:}
              \PY{n}{x} \PY{o}{=} \PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{q}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
              \PY{n}{y} \PY{o}{=} \PY{n}{power\PYZus{}mod}\PY{p}{(}\PY{n}{g}\PY{p}{,}\PY{n}{x}\PY{p}{,}\PY{n}{p}\PY{p}{)}
              \PY{k}{return} \PY{p}{(}\PY{n}{y}\PY{p}{,}\PY{n}{x}\PY{p}{)}
@@ -404,7 +409,7 @@ so is as follows :
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}21}]:} \PY{p}{(}\PY{n}{y}\PY{p}{,}\PY{n}{x}\PY{p}{)} \PY{o}{=} \PY{n}{dlp\PYZus{}keygen}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}18}]:} \PY{p}{(}\PY{n}{y}\PY{p}{,}\PY{n}{x}\PY{p}{)} \PY{o}{=} \PY{n}{dlp\PYZus{}keygen}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{)}
 \end{Verbatim}
 
 
@@ -507,50 +512,42 @@ The DSA signature verification algorithm works as follows :
 \end{itemize}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}22}]:} \PY{k+kn}{from} \PY{n+nn}{hashlib} \PY{k+kn}{import} \PY{n}{sha256}
+{\color{incolor}In [{\color{incolor}21}]:} \PY{n}{message} \PY{o}{=} \PY{l+s+sa}{b}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Nobody inspects}\PY{l+s+s2}{\PYZdq{}}
+         \PY{n}{messageHash} \PY{o}{=} \PY{n}{sha256py}\PY{p}{(}\PY{n}{b}\PY{p}{)}
+         \PY{n}{msgHashBytes} \PY{o}{=} \PY{n+nb}{bytearray}\PY{p}{(}\PY{n}{h}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{k}{def} \PY{n+nf}{int\PYZus{}from\PYZus{}bytes}\PY{p}{(}\PY{n}{b}\PY{p}{)}\PY{p}{:}
+             \PY{n}{n} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{k}{for} \PY{n}{byte} \PY{o+ow}{in} \PY{n}{msgHashBytes}\PY{p}{:}
+                 \PY{n}{n} \PY{o}{=} \PY{n}{n}\PY{o}{\PYZlt{}\PYZlt{}}\PY{l+m+mi}{8} \PY{o}{|} \PY{n}{byte}
+             \PY{k}{return} \PY{n}{n}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{n}{msgPoint} \PY{o}{=} \PY{n}{int\PYZus{}from\PYZus{}bytes}\PY{p}{(}\PY{n}{msgHashBytes}\PY{p}{)}
          
-         \PY{k}{def} \PY{n+nf}{h}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
-             \PY{n+nb}{hash} \PY{o}{=} \PY{n}{sha256}\PY{p}{(}\PY{p}{)}
-             \PY{n+nb}{hash}\PY{o}{.}\PY{n}{update}\PY{p}{(}\PY{n}{x}\PY{p}{)}
-             \PY{k}{return} \PY{n+nb}{hash}\PY{o}{.}\PY{n}{digest}\PY{p}{(}\PY{p}{)}
-\end{Verbatim}
-
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{b} \PY{o}{=} \PY{l+s+sa}{b}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Nobody inspects}\PY{l+s+s2}{\PYZdq{}}
-         \PY{n}{h}\PY{p}{(}\PY{n}{b}\PY{p}{)}
+         \PY{n}{msgPoint} \PY{o}{\PYZlt{}} \PY{p}{(}\PY{n}{p}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}23}]:} '\textbackslash{}xe7\textbackslash{}xa3\textbackslash{}xf8\textbackslash{}x08\textbackslash{}xcb\textbackslash{}x06\textbackslash{}x87\textbackslash{}xfd6`\textbackslash{}xe9V\textbackslash{}xa5\textbackslash{}xdf\textbackslash{}x0f\textbackslash{}x00\textbackslash{}xe2>\textbackslash{}xda\textbackslash{}xc5e\textbackslash{}x07i\textbackslash{}xec5N\textbackslash{}xe6p\textbackslash{}xb6X\textbackslash{}x85\textbackslash{}x8c'
-\end{Verbatim}
-            
-    Because sagemath doesn't support bytes to integer conversion I did that
-in python and pasted the number here.
-h(b)=63559401733551349337704679248512602984947374998675114433015782914039590986727
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}24}]:} \PY{c+c1}{\PYZsh{} Let\PYZsq{}s check that h is less than our p i.e is inside Zp}
-         \PY{n}{h} \PY{o}{=} \PY{l+m+mi}{63559401733551349337704679248512602984947374998675114433015782914039590986727}
-         \PY{n}{h} \PY{o}{\PYZlt{}} \PY{p}{(}\PY{n}{p}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
-\end{Verbatim}
-
-
-\begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}24}]:} True
+{\color{outcolor}Out[{\color{outcolor}26}]:} True
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}25}]:} \PY{k}{def} \PY{n+nf}{dlp\PYZus{}dsa\PYZus{}sign}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{m}\PY{p}{)}\PY{p}{:}
+{\color{incolor}In [{\color{incolor}44}]:} \PY{k}{def} \PY{n+nf}{dlp\PYZus{}dsa\PYZus{}sign}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{,}\PY{n}{x}\PY{p}{,}\PY{n}{h}\PY{p}{)}\PY{p}{:}
              \PY{n}{k} \PY{o}{=} \PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{q}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
              \PY{n}{T} \PY{o}{=} \PY{n}{power\PYZus{}mod}\PY{p}{(}\PY{n}{g}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{p}\PY{p}{)}
              \PY{n}{r} \PY{o}{=} \PY{n}{mod}\PY{p}{(}\PY{n}{T}\PY{p}{,}\PY{n}{q}\PY{p}{)}
              \PY{k}{if} \PY{n}{r} \PY{o}{==} \PY{l+m+mi}{0} \PY{p}{:}
                  \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{r=0 repeat}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-             \PY{n}{h} \PY{o}{=} \PY{l+m+mi}{63559401733551349337704679248512602984947374998675114433015782914039590986727}
              \PY{n}{invk} \PY{o}{=} \PY{n}{inverse\PYZus{}mod}\PY{p}{(}\PY{n}{k}\PY{p}{,}\PY{n}{q}\PY{p}{)}
-             \PY{n}{s1} \PY{o}{=} \PY{n}{invk}\PY{o}{*}\PY{p}{(}\PY{n}{Integer}\PY{p}{(}\PY{n}{h}\PY{p}{)}\PY{o}{+}\PY{p}{(}\PY{n}{y}\PY{o}{*}\PY{n}{r}\PY{p}{)}\PY{p}{)}
+             \PY{n}{secpart} \PY{o}{=} \PY{p}{(}\PY{n}{Integer}\PY{p}{(}\PY{n}{h}\PY{p}{)} \PY{o}{+} \PY{p}{(}\PY{n}{x}\PY{o}{*}\PY{n}{r}\PY{p}{)} \PY{o}{\PYZpc{}} \PY{n}{q}\PY{p}{)} \PY{o}{\PYZpc{}}\PY{k}{q}
+             \PY{n}{s1} \PY{o}{=} \PY{n}{invk}\PY{o}{*}\PY{n}{secpart}
              \PY{n}{s} \PY{o}{=} \PY{n}{s1} \PY{o}{\PYZpc{}} \PY{n}{q}
              \PY{k}{if} \PY{n}{s} \PY{o}{==} \PY{l+m+mi}{0} \PY{p}{:}
                  \PY{k}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{s=0 repeat}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
@@ -559,12 +556,12 @@ h(b)=635594017335513493377046792485126029849473749986751144330157829140395909867
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}26}]:} \PY{n}{r}\PY{p}{,}\PY{n}{s} \PY{o}{=} \PY{n}{dlp\PYZus{}dsa\PYZus{}sign}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{,}\PY{n}{x}\PY{p}{,}\PY{n}{b}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}45}]:} \PY{n}{r}\PY{p}{,}\PY{n}{s} \PY{o}{=} \PY{n}{dlp\PYZus{}dsa\PYZus{}sign}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{,}\PY{n}{x}\PY{p}{,}\PY{n}{msgPoint}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}27}]:} \PY{k}{print}\PY{p}{(}\PY{n}{r} \PY{o}{\PYZlt{}} \PY{p}{(}\PY{n}{q}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}46}]:} \PY{k}{print}\PY{p}{(}\PY{n}{r} \PY{o}{\PYZlt{}} \PY{p}{(}\PY{n}{q}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
          \PY{k}{print}\PY{p}{(}\PY{n}{s} \PY{o}{\PYZlt{}} \PY{p}{(}\PY{n}{q}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
          \PY{k}{print}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{r}\PY{p}{,}\PY{n}{s}\PY{p}{)}
 \end{Verbatim}
@@ -573,12 +570,12 @@ h(b)=635594017335513493377046792485126029849473749986751144330157829140395909867
     \begin{Verbatim}[commandchars=\\\{\}]
 True
 True
-(104116694597093556388258477325882371225424429632523019990173022300713386500073, 362139158459728960513971474916731095377, 1953481512989517349830463270950424582837833895114092601119358879143227469542, 80122107292756902200579454089856062921509161717082990519030243630852977095017, 339846853237835977816144818670279379797, 280672864958921241162029585029789708142)
+(113377137750698992514901559591257981535085762510979630262220173300076725844389, 145781614272749218536927089054294369, 13743192433586752580922535577223971295725355363763292863497585116126565241744, 52805610933121568656382851904751315685369793561473300368000311375497674784972, 28900507199467140063486050821381627, 123908120214468337562239144391336313)
 
     \end{Verbatim}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}29}]:} \PY{k}{def} \PY{n+nf}{dlp\PYZus{}dsa\PYZus{}verify}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{r}\PY{p}{,}\PY{n}{s}\PY{p}{,}\PY{n}{h}\PY{p}{)}\PY{p}{:}
+{\color{incolor}In [{\color{incolor}47}]:} \PY{k}{def} \PY{n+nf}{dlp\PYZus{}dsa\PYZus{}verify}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{r}\PY{p}{,}\PY{n}{s}\PY{p}{,}\PY{n}{h}\PY{p}{)}\PY{p}{:}
              \PY{c+c1}{\PYZsh{} if r or s isn\PYZsq{}t in [1,q\PYZhy{}1] reject the signature}
              \PY{n}{w} \PY{o}{=} \PY{n}{inverse\PYZus{}mod}\PY{p}{(}\PY{n}{Integer}\PY{p}{(}\PY{n}{s}\PY{p}{)}\PY{p}{,}\PY{n}{q}\PY{p}{)}
              \PY{n}{u1} \PY{o}{=} \PY{n}{mod}\PY{p}{(}\PY{n}{h}\PY{o}{*}\PY{n}{w}\PY{p}{,}\PY{n}{q}\PY{p}{)}
@@ -595,12 +592,12 @@ True
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}30}]:} \PY{n}{dlp\PYZus{}dsa\PYZus{}verify}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{r}\PY{p}{,}\PY{n}{s}\PY{p}{,}\PY{n}{h}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}48}]:} \PY{n}{dlp\PYZus{}dsa\PYZus{}verify}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{r}\PY{p}{,}\PY{n}{s}\PY{p}{,}\PY{n}{msgPoint}\PY{p}{)}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}30}]:} True
+{\color{outcolor}Out[{\color{outcolor}48}]:} True
 \end{Verbatim}
             
     To wrap up this let's write a proof that the signature validation
@@ -629,6 +626,179 @@ algorithm is correct
   and verifies \(r' = T \mod q\) is equal to \(r\) \(\square\)
 \end{itemize}
 
+    \subsection{Schnorr Signature
+Algorithm}\label{schnorr-signature-algorithm}
+
+So a signature is a \emph{proof of knowledge of y} and we can describe a
+\emph{signature algorithms} ase a sequence of computations used to
+generate a \textbf{proof} and \textbf{verify} a proof.
+
+The Schnorr signature algorithm is actually an \emph{interactive zero
+knowledge proof of logarithm} you can read the
+\href{https://pdfs.semanticscholar.org/8d69/c06d48b618a090dd19185aea7a13def894a5.pdf}{paper}
+there's a nice construction in cryptography called the
+\href{https://pdfs.semanticscholar.org/b904/6d002da153a6fe9b06d469da4efffdfcb9c6.pdf}{fiat-shamir
+heuristic} that can turn any \emph{interactive proof} to a
+\emph{non-interactive one}.
+
+\begin{quote}
+\textbf{Say I want to let you know that I know \(x\) such as \(g*x = y\)
+and I want to prove it to you without disclosing \(x\).}
+\end{quote}
+
+Well \emph{Schnorr} thought hard and said well we can use randomness and
+hash functions to build a solid protocol that is sound and complete
+(Basically Verifier can't be cheated such as Prover proves a false
+statement)
+
+The protocol works like this :
+
+\begin{itemize}
+\item
+  \textbf{(Commitment)} : Verifier samples a random
+  \(v \in \mathbb{Z_q}\) and asks Prover for \(t = g^v\)
+\item
+  \(t\) is called a commitment it's a way to force the Prover to commit
+  to \(g\).
+\item
+  \textbf{Challenge} : Verifier sends a challenge \(c = H(g,y,t)\)
+\item
+  \textbf{Response} : Prover computes \(r = v -cx \mod q\)
+\item
+  The \textbf{zero knowledge proof of x is \((c,r)\)}
+\end{itemize}
+
+To verify this the verifier can go trough the following steps :
+
+\begin{itemize}
+\item
+  \(t' = g^r.y^c\)
+\item
+  \(t' = g^{(v-cx)}.y^c\)
+\item
+  \(t' = g^{(v-cx)}.g^xc\)
+\item
+  \(t' = g^{(v-cx + cx)} = g^v = t\)
+\end{itemize}
+
+Thus if x was indeed the correct answer we'd have \(H(g,y,t') = t\)
+
+The signature algorithm and verification is no different than this
+process.
+
+Schnorr Signature Algorithm goes as follows:
+
+\begin{itemize}
+\item
+  Input : (p,g,q), x,m
+\item
+  Output : (s,e)
+
+  1.Sample a random \(k \in [1,q-1]\).
+
+  2.Compute \(r = g^k \mod q\)
+
+  3.Compute \(e = H(r||m)\) \textbar{}\textbar{} is the concatenation
+  symbol as r is represented as bytes
+
+  4.Compute \(s = k - xe\)
+
+  5.return \((s,e)\)
+\end{itemize}
+
+Verifying schnorr signatures is easier the algorithm proceeds as follows
+
+\begin{itemize}
+\item
+  Input : (p,q,g),y,(s,e),h
+\item
+  Output : True or Flase
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Let \(rv = g^s * y^e\)
+  \item
+    Let \$ev = H(rv\textbar{}\textbar{}h)
+  \item
+    If \(ev = e\) return True otherwise return False
+  \end{enumerate}
+\end{itemize}
+
+\subsubsection{Notes :}\label{notes}
+
+\begin{itemize}
+\tightlist
+\item
+  For ease I basically work with hashes and verify the signatures over
+  the hashes themselves in a public environment you should ask for the
+  message itself and compute the hashes by yourself (ROM).
+\end{itemize}
+
+    Verifying the signature is as easy as compute \(ev = H(g^s.y^e||M)\) I
+leave to you the implementation details.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}49}]:} \PY{k+kn}{from} \PY{n+nn}{Crypto.Util.number} \PY{k+kn}{import} \PY{n}{long\PYZus{}to\PYZus{}bytes}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}52}]:} \PY{n}{k} \PY{o}{=} \PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{q}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+         \PY{n}{r} \PY{o}{=} \PY{n}{power\PYZus{}mod}\PY{p}{(}\PY{n}{g}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{q}\PY{p}{)}
+         \PY{n}{rb} \PY{o}{=} \PY{n}{long\PYZus{}to\PYZus{}bytes}\PY{p}{(}\PY{n}{r}\PY{p}{)}
+         \PY{n}{rb}\PY{o}{.}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}52}]:} '\textbackslash{}t\textbackslash{}x91\textbackslash{}xf0t\textbackslash{}x80\textbackslash{}xc7\textbackslash{}xb9rJL\textbackslash{}xa5\textbackslash{}xa5\textbackslash{}xf7c\textbackslash{}xbb'
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}53}]:} \PY{k}{def} \PY{n+nf}{schnorr\PYZus{}sign}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{g}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{x}\PY{p}{,}\PY{n}{h}\PY{p}{)}\PY{p}{:}
+             \PY{n}{k} \PY{o}{=} \PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{q}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{)}
+             \PY{n}{r} \PY{o}{=} \PY{n}{power\PYZus{}mod}\PY{p}{(}\PY{n}{g}\PY{p}{,}\PY{n}{k}\PY{p}{,}\PY{n}{q}\PY{p}{)}
+             \PY{n}{rBytes} \PY{o}{=} \PY{n}{long\PYZus{}to\PYZus{}bytes}\PY{p}{(}\PY{n}{r}\PY{p}{)}
+             \PY{n}{rm} \PY{o}{=} \PY{n}{rb} \PY{o}{+} \PY{n}{h}
+             \PY{n}{eBytes} \PY{o}{=} \PY{n}{sha256py}\PY{p}{(}\PY{n}{rm}\PY{p}{)}
+             \PY{n}{e} \PY{o}{=} \PY{n}{int\PYZus{}from\PYZus{}bytes}\PY{p}{(}\PY{n}{eBytes}\PY{p}{)}
+             \PY{n}{s} \PY{o}{=} \PY{p}{(}\PY{n}{k} \PY{o}{\PYZhy{}} \PY{p}{(}\PY{n}{x}\PY{o}{*}\PY{n}{e}\PY{p}{)} \PY{o}{\PYZpc{}} \PY{n}{q}\PY{p}{)} \PY{o}{\PYZpc{}} \PY{n}{q}
+             \PY{k}{return} \PY{p}{(}\PY{n}{s}\PY{p}{,}\PY{n}{e}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}54}]:} \PY{p}{(}\PY{n}{s}\PY{p}{,}\PY{n}{e}\PY{p}{)} \PY{o}{=} \PY{n}{schnorr\PYZus{}sign}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{,}\PY{n}{x}\PY{p}{,}\PY{n}{msgHashBytes}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}57}]:} \PY{k}{def} \PY{n+nf}{schnorr\PYZus{}verify}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{,}\PY{n}{y}\PY{p}{,}\PY{n}{s}\PY{p}{,}\PY{n}{e}\PY{p}{,}\PY{n}{h}\PY{p}{)}\PY{p}{:}
+             \PY{n}{gs} \PY{o}{=} \PY{n}{power\PYZus{}mod}\PY{p}{(}\PY{n}{g}\PY{p}{,}\PY{n}{s}\PY{p}{,}\PY{n}{q}\PY{p}{)}
+             \PY{n}{ye} \PY{o}{=} \PY{n}{power\PYZus{}mod}\PY{p}{(}\PY{n}{y}\PY{p}{,}\PY{n}{e}\PY{p}{,}\PY{n}{q}\PY{p}{)}
+             \PY{n}{rv} \PY{o}{=} \PY{n}{gs} \PY{o}{*} \PY{n}{ye}
+             \PY{n}{rvBytes} \PY{o}{=} \PY{n}{long\PYZus{}to\PYZus{}bytes}\PY{p}{(}\PY{n}{rv}\PY{p}{)}
+             \PY{n}{rm} \PY{o}{=} \PY{n}{rvBytes} \PY{o}{+} \PY{n}{h}
+             \PY{n}{evBytes} \PY{o}{=} \PY{n}{sha256py}\PY{p}{(}\PY{n}{rm}\PY{p}{)}
+             \PY{n}{ev} \PY{o}{=} \PY{n}{int\PYZus{}from\PYZus{}bytes}\PY{p}{(}\PY{n}{evBytes}\PY{p}{)}
+             \PY{k}{if} \PY{n}{ev} \PY{o}{==} \PY{n}{e} \PY{p}{:}
+                 \PY{k}{return} \PY{n+nb+bp}{True}
+             \PY{k}{return} \PY{n+nb+bp}{False}
+             
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}58}]:} \PY{n}{schnorr\PYZus{}verify}\PY{p}{(}\PY{n}{p}\PY{p}{,}\PY{n}{q}\PY{p}{,}\PY{n}{g}\PY{p}{,}\PY{n}{x}\PY{p}{,}\PY{n}{s}\PY{p}{,}\PY{n}{e}\PY{p}{,}\PY{n}{msgHashBytes}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}58}]:} True
+\end{Verbatim}
+            
 
     % Add a bibliography block to the postdoc
     
