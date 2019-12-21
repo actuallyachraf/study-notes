@@ -1,0 +1,4 @@
+"Rule: ocaml dependencies ml (%=test )": "e\189/b\006?\153\229E\006\187\027]H$\229"
+"Rule: ocaml: ml -> cmo & cmi (%=test )": "\242\128\202\n\164\240>\217p\006jR\172\198\139V"
+"Resource: /home/kaplan/books/level1/notes/cs/test.ml": "w\228\212\014m\020h\198r\t\2532\b\160\130B"
+"Rule: ocaml: cmo* -> byte (%=test )": "\136\025e#\004\nEQt\136Ll\228`~F"
